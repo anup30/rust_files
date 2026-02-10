@@ -125,7 +125,7 @@ fn main() {
     println!("map: {:?}", map);
 }
 
-// rustc "06.1 HashMap.rs" --crate-name run_program && .\run_program
+// rustc "06a_HashMap.rs" --crate-name run_program && .\run_program
 
 /*
 // Accessing Values  ------------------------------------- example snippet 1

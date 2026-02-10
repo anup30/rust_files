@@ -60,4 +60,7 @@ fn calculate_length_full_ownership(s: String) -> usize {
     s.len()
 }
 
-// rustc "07. function.rs" --crate-name run_program && .\run_program
+// rustc "07_function.rs" --crate-name run_program && .\run_program
+
+
+// built with help of step 3.5, kimi K2.5,

@@ -80,7 +80,7 @@ fn main() {
     println!("matrix= {:?}", matrix);
 }
 
-// rustc "05. vector.rs" --crate-name run_program && .\run_program
+// rustc "05_vector.rs" --crate-name run_program && .\run_program
 
 /*
 // example programs:

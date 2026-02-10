@@ -87,7 +87,7 @@ fn main() {
     println!("Last: {:?}", last_key); // Last: Some((7, "g"))
 }
 
-// rustc "06.2 BTreeMap.rs" --crate-name run_program && .\run_program
+// rustc "06b_BTreeMap.rs" --crate-name run_program && .\run_program
 
 /*
 // Counting Word Frequencies ------------------------ example app 1

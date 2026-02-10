@@ -59,3 +59,5 @@ fn main() {
     s3 = "changed";
     println!("s3 = {}", s3);
 }
+
+// rustc "02_basic_variable.rs" --crate-name run_program && .\run_program

@@ -16,4 +16,4 @@ fn main() {
     println!("next year you will be {} years old", age + 1);
 }
 
-// rustc "03. user input.rs" --crate-name run_program && .\run_program
+// rustc "03a_user_input.rs" --crate-name run_program && .\run_program

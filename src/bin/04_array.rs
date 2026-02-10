@@ -62,6 +62,6 @@ fn main() {
     //let mut arr = [1, 2, 3, 4, 5];
 }
 
-// rustc "04. array.rs" --crate-name run_program && .\run_program
+// rustc "04_array.rs" --crate-name run_program && .\run_program
 
 // with deepseek 3.2 , glm 4.7

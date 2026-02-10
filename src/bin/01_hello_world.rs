@@ -25,12 +25,3 @@ or, compile and run in pwsh:
   (rustc file_name.rs && file_name)
 */
 
-/*
-github upload:
-git init
-git add .
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/anup30/rust_files.git
-git push -u origin main
-*/
