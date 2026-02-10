@@ -1,0 +1,16 @@
+/target
+
+# These are for when you use 'cargo backup' or 'cargo package'
+*.crate
+
+# Log files
+*.log
+
+# Windows specific (if you are on Windows)
+*.exe
+*.pdb
+
+# IDE specific (Optional but recommended)
+.vscode/
+.idea/
+.DS_Store
