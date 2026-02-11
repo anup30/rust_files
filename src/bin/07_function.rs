@@ -33,6 +33,21 @@ fn main() {
       &mut String → read + write permission
       String     → full ownership (can mutate or destroy)
     */
+
+    // Closures (Anonymous Functions)
+    let add = |x: i32, y: i32| x + y;
+    println!("{}", add(2, 3));
+
+    // Multi-line closure
+    let complex = |a, b| {
+        let sum = a + b;
+        let product = a * b;
+        (sum, product)
+    };
+    
+    let (s, p) = complex(3, 4);
+    println!("Sum: {}, Product: {}", s, p);
+    
 }
 
 fn add(a: i32, b: i32) -> i32 {

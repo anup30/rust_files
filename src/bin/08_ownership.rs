@@ -47,16 +47,18 @@ fn main(){
     println!("r1 = {:?}", r1);
     println!("v = {:?}", v); // ok here, r1 scoped out previous line.
 
-/*
-The Borrowing Rules -----
-The Rust type system enforces two critical invariants:
-1, A reference cannot outlive its referent
-2, A mutable reference cannot be aliased
-*/
-
-// 4. Lifetimes: Ensuring References Stay Valid
+    /*
+    The Borrowing Rules -----
+    The Rust type system enforces two critical invariants:
+    1, A reference cannot outlive its referent
+    2, A mutable reference cannot be aliased
+    */
+    
+    // Lifetimes: Ensuring References Stay Valid
 }
 
 fn calculate_length(s: &String) -> usize {
     s.len()
 }
+
+// powered by step 3.5

@@ -81,4 +81,4 @@ String   → owns text
 let s: &str = "hello"; // &str is read-only by design // type is &'static str
 */
 
-// with chatgpt 5.2
+// powered by chatgpt 5.2
