@@ -48,6 +48,13 @@ fn main() {
     let (s, p) = complex(3, 4);
     println!("Sum: {}, Product: {}", s, p);
     
+    // Generic function
+    let numbers = vec![34, 50, 12, 87, 99];
+    println!("Largest number: {}", largest(&numbers));
+    
+    let chars = vec![ 'm', 'y', 'b', 'o', 't'];
+    println!("Largest char: {}", largest(&chars));
+    
 }
 
 fn add(a: i32, b: i32) -> i32 {
@@ -75,7 +82,42 @@ fn calculate_length_full_ownership(s: String) -> usize {
     s.len()
 }
 
+// Generic function, works with multiple types
+fn largest<T: PartialOrd>(list: &[T]) -> &T {
+    let mut largest = &list[0];
+    for item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+    largest
+}
+
 // rustc "07_function.rs" --crate-name run_program && .\run_program
 
 
-// built with help of step 3.5, kimi K2.5,
+// powered by step 3.5, kimi K2.5
+
+
+
+/*
+// Error Handling with Result
+fn divide(a: f64, b: f64) -> Result<f64, String> {
+    if b == 0.0 {
+        Err(String::from("Cannot divide by zero"))
+    } else {
+        Ok(a / b)
+    }
+}
+
+fn main() {
+    match divide(10.0, 2.0) {
+        Ok(result) => println!("Result: {}", result),
+        Err(e) => println!("Error: {}", e),
+    }
+    
+    // Using unwrap_or
+    let result = divide(10.0, 0.0).unwrap_or(f64::NAN);
+    println!("Result with fallback: {}", result);
+}
+*/
