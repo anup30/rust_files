@@ -1,9 +1,13 @@
 // rust struct
+// https://doc.rust-lang.org/book/ch05-00-structs.html
+// https://doc.rust-lang.org/book/ch18-00-oop.html
+
 struct Rectangle {
     width: f64,
     height: f64,
 }
 
+// impl (implementation) block, to add functions (methods) to a struct
 impl Rectangle {
     // Associated function (constructor-like)
     fn new(width: f64, height: f64) -> Self {

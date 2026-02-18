@@ -1,34 +1,22 @@
-// Error Handling - Async Rust integrates naturally with Result
+// Printing Structs (Debug Trait)
 
-use rand::Rng;
+#[derive(Debug, Clone)] // trait `Debug`, Enables debugging formatting
 
-async fn fetch_data(url: String) -> Result<String, reqwest::Error> {
-    // ^ url: &str ?
-    let body = reqwest::get(url).await?.text().await?;
-    Ok(body)
+#[allow(dead_code)] // Fields are used via debug formatting // to fix: fields `width` and `height` are never read
+
+struct Rectangle {
+    width: u32,
+    height: u32,
 }
 
-#[tokio::main]
-async fn main() {
-    // "https://jsonplaceholder.typicode.com/users" , "https://dummyjson.com/users"
-    let mut url = String::from("https://jsonplaceholder.typicode.com/users");
-    
-    let mut rng = rand::thread_rng();
-    // generate random id between 1 and 10 (inclusive)
-    let user_id = rng.gen_range(1..=10);    
-    println!("user id: {}", user_id);
-    url = format!("{}/{}", url, user_id);
-    match fetch_data(url.clone()).await {
-        Ok(data) => println!("Fetched: \n{}", data),
-        Err(e) => eprintln!("Error: {}", e),
-    }
-}
-// cargo run --bin test
+fn main() {
+    let rect = Rectangle { width: 30, height: 50 };
+    // println!("rect, width: {} height: {}", rect.width, rect.height);    
+    println!("rect is {:?}", rect);  // debug format    
+    println!("rect is {:#?}", rect); // pretty multi-line format
 
-/*
-add to Cargo.toml,
-[dependencies]
-rand = "0.8"
-tokio = { version = "1", features = ["full"] }
-reqwest = { version = "0.11", features = ["json"] }
-*/
+    let mut rect2 = rect.clone(); //ownership not moved
+    rect2.width *= 2;
+    println!("rect2 is {:?}", rect2);
+    println!("rect is {:?}", rect);
+}

@@ -30,6 +30,7 @@ Avoid blocking calls (like std::fs::File::read) inside async functions. Use the 
 
 /*
 // reading:
+  https://doc.rust-lang.org/book/ch17-00-async-await.html
   https://rust-lang.github.io/async-book/
   https://tokio.rs/tokio/tutorial/async
   https://thenewstack.io/async-programming-in-rust-understanding-futures-and-tokio/

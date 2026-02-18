@@ -8,8 +8,8 @@ git remote add origin https://github.com/anup30/rust_files.git
 git push -u origin main
 ---
 git add .
-git commit -m "add async files"
+git commit -m "add struct files"
 git push -u origin main
 */
 
-what is trait, 
+what is trait, impl, 
