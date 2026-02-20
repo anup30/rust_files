@@ -1,22 +1,19 @@
-// Printing Structs (Debug Trait)
+use std::fs;
 
-#[derive(Debug, Clone)] // trait `Debug`, Enables debugging formatting
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    println!("rust file output example");
 
-#[allow(dead_code)] // Fields are used via debug formatting // to fix: fields `width` and `height` are never read
+    // Read input file (from previous example)
+    let content = fs::read_to_string("src/bin/rust_notes.txt")?;
 
-struct Rectangle {
-    width: u32,
-    height: u32,
-}
+    // === WRITE TO A NEW FILE ===
+    let output_path = "src/bin/output.txt";
+    fs::write(output_path, content.clone())?;   // writes the entire content
 
-fn main() {
-    let rect = Rectangle { width: 30, height: 50 };
-    // println!("rect, width: {} height: {}", rect.width, rect.height);    
-    println!("rect is {:?}", rect);  // debug format    
-    println!("rect is {:#?}", rect); // pretty multi-line format
+    println!("\nSuccessfully wrote {} bytes to '{}'", content.len(), output_path);
 
-    let mut rect2 = rect.clone(); //ownership not moved
-    rect2.width *= 2;
-    println!("rect2 is {:?}", rect2);
-    println!("rect is {:?}", rect);
+    // Optional: also write a simple string
+    fs::write("src/bin/hello.txt", "Hello from Rust!\nThis is a new file.\n")?;
+
+    Ok(())
 }
