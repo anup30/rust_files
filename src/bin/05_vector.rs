@@ -128,7 +128,7 @@ fn main() {
 fn main() {
     let mut vec = Vec::new();
 
-    // Push elements to the end
+    // Push elements to the end ----------------------
     vec.push(1);
     vec.push(2);
     vec.push(3);

@@ -10,6 +10,15 @@
 use std::collections::HashMap; // must explicitly import
 
 fn main() {
+    let mut tmp: HashMap<i32, &str> = HashMap::new();
+    tmp.insert(1, "one");
+    tmp.insert(2, "two");
+    tmp.insert(3, "three");
+    println!("tmp= {:?}", tmp);
+    tmp.clear();
+    tmp.insert(4, "four");
+    tmp.insert(5, "five");
+    println!("tmp= {:?}", tmp);
     let mut scores: HashMap<String, i32> = HashMap::new();
     println!("map: {:?}", scores); // map: {}
 
@@ -21,6 +30,7 @@ fn main() {
     let anup1: Option<&i32> = scores.get("Anup");
     // ^ not get(&"Anup"), The get method expects a reference to the key type, "Anup" is already a &str, for i32 key use like &1
     let anup2: Option<&i32> = scores.get("anup");
+    
     println!("anup1: {:?}", anup1); // anup1: Some(7)
     println!("anup2: {:?}", anup2); // anup2: None
     if anup1 != None {
