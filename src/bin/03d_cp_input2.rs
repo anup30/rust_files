@@ -49,13 +49,16 @@ fn main() {
     
 }
 
-// input:
+// input output:
 /*
 2
 5
 1 4 3 2 5
 5
 1 4 2 3 5
+
+YES
+NO
 */
 
 /*
@@ -70,7 +73,20 @@ YES
 */
 
 
-// press ctrl+z enter ctrl+z, in terminal to signal eof
+/*
+// if input given from terminal, press enter + ctrl+z, in terminal to signal eof
 
-// pwsh:  cat src/bin/input.txt | cargo run --bin 03d_cp_input2
+// from project root:
+  pwsh7:  cat src/bin/input.txt | cargo run --bin 03d_cp_input2
+  pwsh7 :  rustc "src/bin/03d_cp_input2.rs" --crate-name run_program && .\run_program
+  pwsh7 :  cat src/bin/input.txt | rustc "src/bin/03d_cp_input2.rs" --crate-name run_program && .\run_program
 
+// from containing folder:
+  pwsh5: rustc -O "B_Heapify_1.rs" --crate-name run_program; Get-Content input.txt | .\run_program.exe
+  pwsh5: rustc "B_Heapify_1.rs" --crate-name run_program; .\run_program.exe 
+
+// using cmd from containing folder:
+  cmd: rustc "03d_cp_input2.rs" --crate-name run_program && .\run_program 
+  cmd: rustc "03d_cp_input2.rs" --crate-name run_program && .\run_program < input.txt
+
+*/
