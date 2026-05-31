@@ -9,6 +9,7 @@ struct Rectangle {
 
 // impl (implementation) block, to add functions (methods) to a struct
 impl Rectangle {
+    // functions inside impl block are two types: Methods and Associated functions
     // Associated function (constructor-like)
     fn new(width: f64, height: f64) -> Self {
         Self { width, height }

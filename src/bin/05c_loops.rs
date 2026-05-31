@@ -39,6 +39,14 @@ fn main() {
     println!();
     v2.clear(); 
 
+    // simple while loop
+    let mut x = 0;
+    println!("while loop:");
+    while x <= 5 {
+        print!("{}, ", x);
+        x += 1;
+    }
+
 }
 
 /*
@@ -58,4 +66,18 @@ let result = loop {
         break 42;   // returns 42 from the loop
     }
 };
+*/
+
+/*
+fn main() {
+    let mut b:bool = true;
+    for mut i in 0..10 {        
+        print!("{}, ", i);        
+        if i==5 && b{
+            println!("extra");
+            i -= 2; // problem: loop variable cannot be modified, use while loop instead
+            b = false;
+        }
+    }
+}
 */

@@ -6,7 +6,7 @@ use rand::Rng; //use rand::rngs::OsRng; -> more secure for passwords/tokens etc
 
 async fn fetch_data(url: &str) -> Result<String, reqwest::Error> {
     // ^ url: &str vs String
-    let body = reqwest::get(url).await?.text().await?;
+    let body: String = reqwest::get(url).await?.text().await?; // add reqwest in cargo.toml
     Ok(body)
 }
 

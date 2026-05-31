@@ -23,7 +23,7 @@ or, run by single click code runner icon
   // "rust": "cd $dir && rustc \"$fileName\" --crate-name run_program && .\\run_program.exe",
 or, run button on main function by rust-analyzer extension
 or, compile and run in pwsh:
-  rustc "01_hello_world.rs" --crate-name run_program && .\run_program
+  rustc "src/bin/01_hello_world.rs" --crate-name run_program && .\run_program
   (rustc file_name.rs && file_name)
 */
 

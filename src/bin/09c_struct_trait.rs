@@ -1,4 +1,8 @@
 // struct trait
+/*
+Struct = "what this type IS"
+Trait = "what this type can DO"
+*/
 
 #[derive(Debug, Clone)] // Copy trait ?
 
@@ -52,6 +56,24 @@ If you want == to only care about an id field and ignore a timestamp field, you 
 Clone is explicit. You must call .clone(). It can be "expensive" (like copying a whole book).
 Copy is implicit. It happens automatically on assignment (a = b). It must be "cheap".
 
+*/
+
+/*
+Clone vs Copy:
+- Clone: Explicit. You must call .clone(). It can be "expensive" (like copying a whole book).
+- Copy: Implicit. It happens automatically on assignment (a = b). It must be "cheap".
+Use Copy when:
+  - Small, simple data
+  - No heap allocation
+  - Like numbers or small structs
+Use Clone when:
+  - You need duplication
+  - Data contains String, Vec, etc.
+let a = 5;
+let b = a; // copy
+let s1 = String::from("hi");
+let s2 = s1; // move
+let s3 = s2.clone(); // clone
 */
 
 // by Gemini 3

@@ -40,3 +40,24 @@ Prefer returning Result for expected, recoverable failures (e.g., invalid user i
 In library code, document panic conditions clearly in API documentation.
 Acceptable in prototypes, tests, or when you have proven (and documented) that a failure cannot occur.
 */
+
+
+/*
+unwrap vs ? operator, ? = The Error Propagation Operator/try operator
+
+Feature          .unwrap()                              The ? Operator
+-------------    -----------------------------------    ----------------------------------------
+On Success       Returns the inner value.               Returns the inner value.
+On Failure       Crashes (panics) the entire program.   Returns the error to the calling function.
+Requirement      Can be used anywhere.                  The function must return a Result or Option.
+
+When you use .unwrap(), you are telling the compiler: "I am 100% sure this will succeed. If it doesn't, just crash."
+The ? operator is used for error propagation. Instead of crashing, it passes the error up the chain so the caller can decide how to handle it.
+
+expect(msg): 
+This is similar to .unwrap(), but it allows you to provide a custom error message.
+Crashes the program immediately, No error propagation, Works in any function (no Result return needed)
+
+Use ? — in production code, libraries, anywhere errors should be handled gracefully.
+Use expect() — in tests, prototypes, main() setup, or when a failure truly is a bug (i.e., it should never happen).
+*/

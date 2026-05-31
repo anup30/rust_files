@@ -61,6 +61,11 @@ fn main() {
         None => println!("anup2 key not found"),
     }
 
+    // check if key exists -----
+    if scores.contains_key("Anup") {
+        println!("Anup key exists, Anup score: {}", scores.get("Anup").unwrap());
+    }
+
     println!("{}", scores.entry(String::from("Anup")).or_insert(0)); // insert 0 if key not present
 
     // println!("{}", scores.entry(String::from("zeba"))); // error
@@ -83,7 +88,7 @@ fn main() {
     fruits.insert(3, String::from("Orange"));
 
     let val: i32 = 2;
-    if fruits.contains_key(&val) {
+    if fruits.contains_key(&val) { // check if key exists -----
         println!("Key {} exists in fruits map!", val);
     }
     // Iterate
