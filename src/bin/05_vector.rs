@@ -63,11 +63,12 @@ fn main() {
     }
 
     let vec = vec![1, 2, 3, 4, 5];
-    // Iterator methods
+    // Iterator methods -------------------------------------
     println!("iter methods:");
     let _sum: i32 = vec.iter().sum();
     let _doubled: Vec<i32> = vec.iter().map(|x| x * 2).collect();
     let _evens: Vec<&i32> = vec.iter().filter(|x| *x % 2 == 0).collect();
+    let _max: &i32 = vec.iter().max().expect("Vector is empty"); // .unwrap()
     // With index
     for (index, value) in vec.iter().enumerate() {
         println!("Index {}: {}", index, value);

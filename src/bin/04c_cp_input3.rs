@@ -1,25 +1,38 @@
-// input taking using macro_rules! - scanln
+// input taking using macro_rules! - scanln and next (can use any)
 // idea from: https://codeforces.com/contest/2227/submission/373136651 (by silicalet)
 // problem: round 1096 - E. It All Went Sideways, https://codeforces.com/contest/2227/problem/E  
 
 #![allow(unused, non_snake_case, dead_code)]
 use std::io::{BufRead, Read, Write, stdout, stdin};
 
-// --- COMPACT I/O MACROS ---
 
 /// Reads an entire line, splits it by whitespace, and parses elements into a Vec<T>
-/// Usage: let row = scanln!(i32); // or single element, let num = scanln!(i32)[0];
+/// Usage: let row = scanln!(i32); // or single element, let st = scanln!(String)[0];
+
 macro_rules! scanln {
-    ($t:ty) => {{ // when a macro has ($t:ty), it means you must pass the type inside the macro call.
-        let mut ln = String::new();
-        stdin().lock().read_line(&mut ln).unwrap();
+    ($t:ty) => {{ // when a macro has ($t:ty), it means you must pass the type inside the macro call
+        let ln: String = stdin().lock().lines()
+            .skip_while(|x| x.as_ref().unwrap().is_empty())
+            .next().unwrap().unwrap();
         let v: Vec<$t> = ln.split_whitespace().map(|x| x.parse().unwrap()).collect();
         v
     }};
 }
 
-fn main() {
-    let T: usize = scanln!(usize)[0];
+macro_rules! next {
+    () => {{
+        use std::io::Read;
+        let mut token = stdin().lock().bytes()
+            .skip_while(|x| x.as_ref().unwrap().is_ascii_whitespace())
+            .take_while(|x| !x.as_ref().unwrap().is_ascii_whitespace())
+            .map(|x| x.unwrap() as char)
+            .collect::<String>();
+        token.parse().unwrap()
+    }};
+}
+
+fn main() {    
+    let T: usize = next!(); // let T: usize = scanln!(usize)[0];
     for _ in 1..=T {
         solve();
     }
@@ -28,8 +41,9 @@ fn main() {
 fn solve(){
     let mut out = stdout().lock();
 
-    let n:usize = scanln!(usize)[0];
-    let a: Vec<usize> = scanln!(usize);
+    let n:usize = scanln!(usize)[0]; // or, let n:usize = next!();
+    let a: Vec<usize> = scanln!(usize); // or, let a: Vec<usize> = (0..n).map(|_| next!()).collect();
+
 
     let mut suf = vec![0; n]; // suffix minimum array
     suf[n - 1] = a[n - 1];

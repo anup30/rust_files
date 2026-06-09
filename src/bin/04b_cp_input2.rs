@@ -4,13 +4,12 @@
 use std::io::{self, Read, BufWriter, Write};
 
 fn main() {
+    let mut out = BufWriter::new(io::stdout());
     let mut buf = String::new();
-    io::stdin().read_to_string(&mut buf).unwrap();
-    
+    io::stdin().read_to_string(&mut buf).unwrap();    
     let mut tokens = buf.split_whitespace().map(|x| x.parse::<usize>().unwrap());
     
     let tc = tokens.next().unwrap() as usize;
-    let mut out = BufWriter::new(io::stdout());
 
     const SZ: usize = 200001; // 2e5+1
 
