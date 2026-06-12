@@ -1,48 +1,93 @@
-// cp input example
-// problem: A. Sieve of Erato67henes: https://codeforces.com/contest/2195/problem/A
+// problem: B. Heapify 1: https://codeforces.com/contest/2195/problem/B // Accepted
+// my first rust problem solution
 
 use std::io::{self, Read, BufWriter, Write};
 
 fn main() {
-    //println!("testing cp buf:");
     let mut buf = String::new();
-    io::stdin().read_to_string(&mut buf).unwrap();
-    
-    let mut tokens = buf.split_whitespace().map(|x| x.parse::<i32>().unwrap());
+    io::stdin().read_to_string(&mut buf).unwrap();    
+    let mut tokens = buf.split_whitespace().map(|x| x.parse::<usize>().unwrap());
     
     let tc = tokens.next().unwrap() as usize;
+    
+    const SZ: usize = 200001; // 2e5+1
+    
+    let mut pos: Vec<usize> = Vec::with_capacity(SZ);
+    let mut num:usize;
+    
     let mut out = BufWriter::new(io::stdout());
+
     for _ in 0..tc {
         let n = tokens.next().unwrap() as usize;
-        let mut found = false;
-        for _ in 0..n {
-            if tokens.next().unwrap() == 67 {
-                found = true;
+        pos.resize(SZ, 0);
+        let mut is_perm = true;
+
+        for i in 1..=n {
+            num = tokens.next().unwrap();
+            pos[num as usize] = i;
+        }        
+        // println!("pos: {:?}", pos);
+        for i in 1..=n { // main loop
+            let mut p = pos[i];
+            if i>p {
+                while i>p{p*=2;}
+                if i != p {
+                    is_perm = false;
+                    break; // break1, even though nested ifs, breaks innermost enclosing loop. similar in c/c++/python
+                }
+            }else if i<p{
+                while i<p{p/=2;}
+                if i != p {
+                    is_perm = false;
+                    break; // break2
+                }
             }
         }
-        //println!("{}", if found { "YES" } else { "NO" }); // ok
-        writeln!(out, "{}", if found { "YES" } else { "NO" }).unwrap(); // faster
+        // println!("{}", if is_perm { "YES" } else { "NO" }); // ok
+        writeln!(out, "{}", if is_perm { "YES" } else { "NO" }).unwrap(); // faster
+        pos.clear();
     }
-    // let _ = io::stdin().read_line(&mut String::new()); // dont close program immediately
+    
 }
 
-// buf:
+// input output:
 /*
 2
 5
-1 7 6 7 67
+1 4 3 2 5
 5
-1 3 5 7 8
+1 4 2 3 5
+
+YES
+NO
 */
-// press ctrl+z then enter, in terminal to signal eof
+
+/*
+2
+3
+2 1 3
+4
+2 4 3 1
+
+YES
+YES
+*/
 
 
-// rustc "03c_cp_input.rs" --crate-name run_program && .\run_program  // run from src/bin/
-// cargo run --bin 03c_cp_input  // run from project root  // can run from project root or src/bin/
+/*
+// if input given from terminal, press enter + ctrl+z, in terminal to signal eof
 
-// cmd: cargo run --bin 03c_cp_input < buf.txt
-// cmd: rustc "03c_cp_input.rs" --crate-name run_program && .\run_program < buf.txt
+// from project root:
+  pwsh7:  cat src/bin/input.txt | cargo run --bin 04a_cp_input1
+  pwsh7 :  rustc "src/bin/04a_cp_input1.rs" --crate-name run_program && .\run_program
+  pwsh7 :  cat src/bin/input.txt | rustc "src/bin/04a_cp_input1.rs" --crate-name run_program && .\run_program
 
-// pwsh: cat src/bin buf.txt | cargo run --bin 03c_cp_input
+// from containing folder:
+  pwsh5: rustc -O "B_Heapify_1.rs" --crate-name run_program; Get-Content input.txt | .\run_program.exe
+  pwsh5: rustc "B_Heapify_1.rs" --crate-name run_program; .\run_program.exe 
 
-// build with Kimi K2.5, Grok 4.2 // fast for large buf outputs
+// using cmd from containing folder:
+  cmd: rustc "04a_cp_input1.rs" --crate-name run_program && .\run_program 
+  cmd: rustc "04a_cp_input1.rs" --crate-name run_program && .\run_program < input.txt
+
+*/

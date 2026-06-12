@@ -1,91 +1,112 @@
-// problem: B. Heapify 1: https://codeforces.com/contest/2195/problem/B // Accepted
-// my first rust problem solution
+// input taking using macro_rules! - scanln and next (can use any)
+// idea from: https://codeforces.com/contest/2227/submission/373136651 (by silicalet)
+// problem: round 1096 - E. It All Went Sideways, https://codeforces.com/contest/2227/problem/E  
 
-use std::io::{self, Read, BufWriter, Write};
+#![allow(unused, non_snake_case, dead_code)]
+use std::io::{BufRead, Read, Write, stdout, stdin};
 
-fn main() {
-    let mut out = BufWriter::new(io::stdout());
-    let mut buf = String::new();
-    io::stdin().read_to_string(&mut buf).unwrap();    
-    let mut tokens = buf.split_whitespace().map(|x| x.parse::<usize>().unwrap());
-    
-    let tc = tokens.next().unwrap() as usize;
 
-    const SZ: usize = 200001; // 2e5+1
+/// Reads an entire line, splits it by whitespace, and parses elements into a Vec<T>
+/// Usage: let row = scanln!(i32); // or single element, let st = scanln!(String)[0];
 
-    let mut pos: Vec<usize> = Vec::with_capacity(SZ);
-    let mut num:usize;
-
-    for _ in 0..tc {
-        let n = tokens.next().unwrap() as usize;
-        pos.resize(SZ, 0);
-        let mut is_perm = true;
-
-        for i in 1..=n {
-            num = tokens.next().unwrap();
-            pos[num as usize] = i;
-        }        
-        // println!("pos: {:?}", pos);
-        for i in 1..=n { // main loop
-            let mut p = pos[i];
-            if i>p {
-                while i>p{p*=2;}
-                if i != p {
-                    is_perm = false;
-                    break; // break1, even though nested ifs, breaks innermost enclosing loop. similar in c/c++/python
-                }
-            }else if i<p{
-                while i<p{p/=2;}
-                if i != p {
-                    is_perm = false;
-                    break; // break2
-                }
-            }
-        }
-        writeln!(out, "{}", if is_perm { "YES" } else { "NO" }).unwrap();
-        pos.clear();
-    }
-    
+macro_rules! scanln {
+    ($t:ty) => {{ // when a macro has ($t:ty), it means you must pass the type inside the macro call
+        let ln: String = stdin().lock().lines()
+            .skip_while(|x| x.as_ref().unwrap().is_empty())
+            .next().unwrap().unwrap();
+        let v: Vec<$t> = ln.split_whitespace().map(|x| x.parse().unwrap()).collect();
+        v
+    }};
 }
 
-// input output:
-/*
-2
-5
-1 4 3 2 5
-5
-1 4 2 3 5
+macro_rules! next {
+    () => {{
+        use std::io::Read;
+        let mut token = stdin().lock().bytes()
+            .skip_while(|x| x.as_ref().unwrap().is_ascii_whitespace())
+            .take_while(|x| !x.as_ref().unwrap().is_ascii_whitespace())
+            .map(|x| x.unwrap() as char)
+            .collect::<String>();
+        token.parse().unwrap()
+    }};
+}
 
-YES
-NO
-*/
+fn main() {    
+    let T: usize = next!(); // let T: usize = scanln!(usize)[0];
+    for _ in 1..=T {
+        solve();
+    }
+}
 
-/*
-2
-3
-2 1 3
-4
-2 4 3 1
+fn solve(){
+    let mut out = stdout().lock();
 
-YES
-YES
-*/
+    let n:usize = scanln!(usize)[0]; // or, let n:usize = next!();
+    let a: Vec<usize> = scanln!(usize); // or, let a: Vec<usize> = (0..n).map(|_| next!()).collect();
+
+
+    let mut suf = vec![0; n]; // suffix minimum array
+    suf[n - 1] = a[n - 1];
+ 
+    for i in (0..n - 1).rev() {
+        suf[i] = suf[i + 1].min(a[i]);
+    }
+ 
+    let sum: usize = a.iter().sum();
+    let tmp: usize = suf.iter().sum();
+    let b = sum - tmp;
+ 
+    let mut cnt = vec![0usize; n << 1 | 1];
+    let mut ans = 0;
+ 
+    for i in 0..n {
+        cnt[suf[i]] += 1;
+        if cnt[a[i]] < 1 {
+            continue;
+        }
+        ans = ans.max(cnt[a[i]] - 1);
+    } 
+    writeln!(out, "{}", b + ans);
+}
+
 
 
 /*
 // if input given from terminal, press enter + ctrl+z, in terminal to signal eof
 
 // from project root:
-  pwsh7:  cat src/bin/input.txt | cargo run --bin 03d_cp_input2
-  pwsh7 :  rustc "src/bin/03d_cp_input2.rs" --crate-name run_program && .\run_program
-  pwsh7 :  cat src/bin/input.txt | rustc "src/bin/03d_cp_input2.rs" --crate-name run_program && .\run_program
+  pwsh7:  cat src/bin/input.txt | cargo run --bin 04b_cp_input2
+  pwsh7 :  rustc "src/bin/04b_cp_input2.rs" --crate-name run_program && .\run_program
+  pwsh7 :  cat src/bin/input.txt | rustc "src/bin/04b_cp_input2.rs" --crate-name run_program && .\run_program
 
 // from containing folder:
-  pwsh5: rustc -O "B_Heapify_1.rs" --crate-name run_program; Get-Content input.txt | .\run_program.exe
-  pwsh5: rustc "B_Heapify_1.rs" --crate-name run_program; .\run_program.exe 
+  pwsh5: rustc -O "04b_cp_input2.rs" --crate-name run_program; Get-Content input.txt | .\run_program.exe
+  pwsh5: rustc "04b_cp_input2.rs" --crate-name run_program; .\run_program.exe 
 
 // using cmd from containing folder:
-  cmd: rustc "03d_cp_input2.rs" --crate-name run_program && .\run_program 
-  cmd: rustc "03d_cp_input2.rs" --crate-name run_program && .\run_program < input.txt
+  cmd: rustc "04b_cp_input2.rs" --crate-name run_program && .\run_program 
+  cmd: rustc "04b_cp_input2.rs" --crate-name run_program && .\run_program < input.txt
 
+*/
+
+
+/*
+testcase:
+5
+5
+1 2 3 2 1
+7
+5 4 1 1 1 1 3
+6
+1 2 3 4 5 6
+6
+4 1 6 3 2 6
+7
+1 3 2 7 2 3 1
+
+8
+12
+0
+10
+18
 */

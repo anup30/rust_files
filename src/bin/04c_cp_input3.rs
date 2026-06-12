@@ -1,82 +1,51 @@
-// input taking using macro_rules! - scanln and next (can use any)
-// idea from: https://codeforces.com/contest/2227/submission/373136651 (by silicalet)
-// problem: round 1096 - E. It All Went Sideways, https://codeforces.com/contest/2227/problem/E  
+// solution: https://codeforces.com/contest/2217/submission/370167287 (by trycatchcry)
+// problem: round 1091 - C. Grid Covering, https://codeforces.com/contest/2217/problem/C
+use std::io::{self, Read};
 
-#![allow(unused, non_snake_case, dead_code)]
-use std::io::{BufRead, Read, Write, stdout, stdin};
-
-
-/// Reads an entire line, splits it by whitespace, and parses elements into a Vec<T>
-/// Usage: let row = scanln!(i32); // or single element, let st = scanln!(String)[0];
-
-macro_rules! scanln {
-    ($t:ty) => {{ // when a macro has ($t:ty), it means you must pass the type inside the macro call
-        let ln: String = stdin().lock().lines()
-            .skip_while(|x| x.as_ref().unwrap().is_empty())
-            .next().unwrap().unwrap();
-        let v: Vec<$t> = ln.split_whitespace().map(|x| x.parse().unwrap()).collect();
-        v
-    }};
-}
-
-macro_rules! next {
-    () => {{
-        use std::io::Read;
-        let mut token = stdin().lock().bytes()
-            .skip_while(|x| x.as_ref().unwrap().is_ascii_whitespace())
-            .take_while(|x| !x.as_ref().unwrap().is_ascii_whitespace())
-            .map(|x| x.unwrap() as char)
-            .collect::<String>();
-        token.parse().unwrap()
-    }};
-}
-
-fn main() {    
-    let T: usize = next!(); // let T: usize = scanln!(usize)[0];
-    for _ in 1..=T {
-        solve();
+fn gcd(mut a: i64, mut b: i64) -> i64 {
+    while b != 0 {
+        let t = a % b;
+        a = b;
+        b = t;
     }
+    a
 }
-
-fn solve(){
-    let mut out = stdout().lock();
-
-    let n:usize = scanln!(usize)[0]; // or, let n:usize = next!();
-    let a: Vec<usize> = scanln!(usize); // or, let a: Vec<usize> = (0..n).map(|_| next!()).collect();
-
-
-    let mut suf = vec![0; n]; // suffix minimum array
-    suf[n - 1] = a[n - 1];
  
-    for i in (0..n - 1).rev() {
-        suf[i] = suf[i + 1].min(a[i]);
-    }
+fn solve() {
+    let mut s = String::new();
+    io::stdin().read_to_string(&mut s).unwrap();
+    let mut it = s.split_whitespace();
  
-    let sum: usize = a.iter().sum();
-    let tmp: usize = suf.iter().sum();
-    let b = sum - tmp;
+    let t: usize = it.next().unwrap().parse().unwrap();
+    let mut out = String::new();
  
-    let mut cnt = vec![0usize; n << 1 | 1];
-    let mut ans = 0;
+    for _ in 0..t {
+        let n: i64 = it.next().unwrap().parse().unwrap();
+        let m: i64 = it.next().unwrap().parse().unwrap();
+        let a: i64 = it.next().unwrap().parse().unwrap();
+        let b: i64 = it.next().unwrap().parse().unwrap();
  
-    for i in 0..n {
-        cnt[suf[i]] += 1;
-        if cnt[a[i]] < 1 {
-            continue;
+        if gcd(n, a) == 1 && gcd(m, b) == 1 && gcd(n, m) <= 2 {
+            out.push_str("YES\n");
+        } else {
+            out.push_str("NO\n");
         }
-        ans = ans.max(cnt[a[i]] - 1);
-    } 
-    writeln!(out, "{}", b + ans);
+    }
+ 
+    print!("{}", out);
 }
-
+ 
+fn main() {
+    solve();
+}
 
 
 /*
 // if input given from terminal, press enter + ctrl+z, in terminal to signal eof
 
 // from project root:
-  pwsh7:  cat src/bin/input.txt | cargo run --bin 04c_cp_input3
   pwsh7 :  rustc "src/bin/04c_cp_input3.rs" --crate-name run_program && .\run_program
+  pwsh7:  cat src/bin/input.txt | cargo run --bin 04c_cp_input3
   pwsh7 :  cat src/bin/input.txt | rustc "src/bin/04c_cp_input3.rs" --crate-name run_program && .\run_program
 
 // from containing folder:
@@ -92,21 +61,26 @@ fn solve(){
 
 /*
 testcase:
-5
-5
-1 2 3 2 1
-7
-5 4 1 1 1 1 3
-6
-1 2 3 4 5 6
-6
-4 1 6 3 2 6
-7
-1 3 2 7 2 3 1
-
-8
-12
-0
 10
-18
+1 1 1 1
+2 2 1 1
+4 2 2 1
+6 9 6 7
+67 42 42 67
+3411 4134 32 23
+90234 143124 232 323
+69387963 98793214 9791 4324786
+985865 578977 899368 447605
+1000000000 1000000000 1000000000 1000000000
+
+YES
+YES
+NO
+NO
+YES
+NO
+NO
+NO
+YES
+NO
 */
